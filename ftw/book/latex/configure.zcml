@@ -13,10 +13,27 @@
         />
 
     <adapter
+        factory="ftw.book.latex.proceedingslayout.ProceedingsLayout"
+        provides="ftw.pdfgenerator.interfaces.ILaTeXLayout"
+        />
+
+    <adapter
         name="ftw.book.latex.DefaultLayoutExtender"
         factory="ftw.book.latex.defaultlayout.DefaultBookLayoutExtender"
         provides="archetypes.schemaextender.interfaces.ISchemaExtender"
         />
+
+    <adapter
+        name="ftw.book.latex.ProceedingsLayoutBookExtender"
+        factory="ftw.book.latex.proceedingslayout.ProceedingsLayoutBookExtender"
+        provides="archetypes.schemaextender.interfaces.ISchemaExtender"
+    />
+
+    <adapter
+        name="ftw.book.latex.ProceedingsLayoutChapterExtender"
+        factory="ftw.book.latex.proceedingslayout.ProceedingsLayoutChapterExtender"
+        provides="archetypes.schemaextender.interfaces.ISchemaExtender"
+    />
 
     <adapter
         factory="ftw.book.latex.converter.BookHTML2LatexConverter"
