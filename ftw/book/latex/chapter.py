@@ -13,6 +13,7 @@ class ChapterLaTeXView(RecursiveLaTeXView):
     def render(self):
         latex = self.get_heading_counters_latex()
         latex += utils.get_latex_heading(self.context, self.layout)
+        latex += utils.get_latex_chapter_author(self.context)   #Only Chapter in the first level have "author" field
         latex += self.render_children()
         return latex
 
@@ -34,7 +35,6 @@ class ChapterLaTeXView(RecursiveLaTeXView):
         helper = BookHelper()
         heading_numbers = helper.get_chapter_level(self.context)
         latex = []
-
         if heading_numbers[-1] == 1:
             del heading_numbers[-1]
         else:

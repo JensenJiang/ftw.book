@@ -1,5 +1,5 @@
 from Acquisition import aq_inner, aq_parent
-from ftw.book.interfaces import IBook
+from ftw.book.interfaces import IBook,IChapter
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 
 
@@ -126,3 +126,13 @@ class BookHelper(object):
             return False
 
         return True
+
+    def is_first_level_chapter(self,context):
+        """Check if the context is Chapter in the first level of book
+        """
+        #If the context is None or it is not a chpater
+        if context == None or not IChapter.providedBy(context): return False
+
+        par = aq_parent(aq_inner(context))
+        if par and IBook.providedBy(par): return True
+        return False

@@ -1,6 +1,7 @@
 from Acquisition import aq_inner, aq_parent
 from Products.ATContentTypes.lib.imagetransform import ATCTImageTransform
 from ftw.book.interfaces import IBook
+from ftw.book.helpers import BookHelper
 from ftw.pdfgenerator.html2latex.utils import generate_manual_caption
 from ftw.pdfgenerator.templating import MakoTemplating
 from plone.app.layout.navigation.interfaces import INavigationRoot
@@ -91,6 +92,18 @@ def get_raw_image_data(image):
 
     else:
         return image.data.read()
+
+def get_latex_chapter_author(context):
+    helper = BookHelper()
+    if not helper.is_first_level_chapter(context): return ""
+
+    latex = ""
+    author = context.Schema().getField("author")
+    if author:
+        author = author.get(context)
+        if author:
+            latex = "\\chapterauthor{%s}\n" % author
+    return latex
 
 
 class ImageLaTeXGenerator(MakoTemplating):
