@@ -1,0 +1,83 @@
+<%block name="documentclass">
+ \documentclass{simplebook}
+</%block>
+
+<%block name="use_packages">
+  ${packages}
+</%block>
+
+<%block name="settings">
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[RE]{\rightmark}
+</%block>
+
+<%block name="book_vars">
+  ## logo is not available currently
+  % if logo:
+    % if logo_width:
+        ## \def\sphinxlogo{\includegraphics[width=.${logo_width}\textwidth]{${logo}}}
+    % else:
+        ## \def\sphinxlogo{\includegraphics{${logo}}}
+    % endif
+  % else:
+    ## \def\sphinxlogo{}
+  % endif
+
+  \title{${title}}
+  % if release:
+    ## \release{${release}}
+  % endif
+
+  % if author:
+    \author{${author}}
+  % endif
+
+  % if authoraddress:
+    ## \authoraddress{${authoraddress}}
+  % endif
+
+  % if context_is_book:
+    % if use_index:
+      \makeindex
+    % endif
+  % endif
+</%block>
+
+\begin{document}
+    <%block name="front_matter">
+      % if context_is_book:
+        % if use_titlepage:
+          \maketitle
+        % endif
+
+        % if use_toc:
+          \tableofcontents
+          \clearpage
+        % endif
+      % endif
+    </%block>
+
+<%block name="body_matter">
+    ${content}
+</%block>
+
+<%block name="back_matter">
+  % if context_is_book:
+    % if use_loi:
+      \listoffigures
+    % endif
+
+    % if use_lot:
+      \listoftables
+    % endif
+
+    % if use_index:
+      \renewcommand{\indexname}{${index_title}}
+      \printindex
+    % endif
+  % endif
+</%block>
+\end{document}
