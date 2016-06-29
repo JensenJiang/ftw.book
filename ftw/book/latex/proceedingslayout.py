@@ -21,6 +21,18 @@ from zope.i18n import translate
 class StringField(ExtensionField, public.StringField):
     pass
 
+
+class TextField(ExtensionField, public.TextField):
+    pass
+
+
+class FileField(ExtensionField, public.FileField):
+    pass
+
+
+class IntegerField(ExtensionField, public.IntegerField):
+    pass
+
 class IProceedingsLayoutSelectionLayer(Interface):
     """Request layer interface for selecting the proceedings layout.
     """
@@ -42,6 +54,53 @@ class ProceedingsLayoutBookExtender(object):
             widget=atapi.StringWidget(
                 label = _(u'book_label_editor',default=u'Editor'),
             )
+        ),
+        StringField(
+            name='release',
+            default='',
+            required=False,
+            widget=atapi.StringWidget(
+                label=_(u'book_label_release', default=u'Release'),
+            )
+        ),
+        TextField(
+            name='author_address',
+            default='',
+            required=False,
+            default_content_type='text/plain',
+            allowable_content_types=('text/plain',),
+            default_output_type='text/plain',
+
+            widget=atapi.TextAreaWidget(
+                label=_(u'book_label_author_address',
+                        default=u'Author Address'),
+            )
+        ),
+        FileField(
+            name='titlepage_logo',
+            required=False,
+
+            widget=atapi.FileWidget(
+                label=_(u'book_label_titlepage_logo',
+                        default=u'Titlepage logo'),
+                description=_(u'book_help_titlepage_logo',
+                              default=u'Upload an image or a PDF, which '
+                              u'will be displayed on the titlepage')
+                )
+        ),
+        IntegerField(
+            name='titlepage_logo_width',
+            default=0,
+            required=False,
+            size=3,
+            widget=atapi.IntegerWidget(
+                label=_(u'book_label_titlepage_logo_width',
+                        default=u'Titlepage logo width (%)'),
+                description=_(u'book_help_titlepage_logo_width',
+                              default=u'Width of the titlepage logo in '
+                              u'percent of the content width.'),
+                size=3,
+                maxlength=3)
         ),
     ]
 
@@ -109,7 +168,7 @@ class ProceedingsLayout(MakoLayoutBase):
         book = self.get_book()
 
         convert = self.get_converter().convert
-        '''
+
         address = book.Schema().getField('author_address').get(book)
         address = convert(address.replace('\n', '<br />')).replace('\n', '')
 
@@ -125,20 +184,20 @@ class ProceedingsLayout(MakoLayoutBase):
         else:
             logo_filename = False
             logo_width = 0
-        '''
+
         args = {
             'context_is_book': self.context == book,
             'title': book.Title(),
             'use_titlepage': book.getUse_titlepage(),
-            #'logo': logo_filename,
-            #logo_width': logo_width,
+            'logo': logo_filename,
+            'logo_width': logo_width,
             'use_toc': book.getUse_toc(),
             'use_lot': book.getUse_lot(),
             'use_loi': book.getUse_loi(),
             'use_index': book.getUse_index(),
-            #'release': convert(book.Schema().getField('release').get(book)),
+            'release': convert(book.Schema().getField('release').get(book)),
             'editor': convert(book.Schema().getField('author').get(book)),  #Editor
-            #'authoraddress': address,
+            'authoraddress': address,
             'babel': get_preferred_babel_option_for_context(self.context),
             'index_title': self.get_index_title(),
         }
@@ -150,6 +209,7 @@ class ProceedingsLayout(MakoLayoutBase):
         self.use_package('babel')
 
         self.add_raw_template_file('simplebook.cls')
+        self.remove_package('graphicx')
 
     def get_book(self):
         obj = self.context
