@@ -101,8 +101,9 @@ def get_latex_chapter_author(context):
     author = context.Schema().getField("author")
     if author:
         author = author.get(context)
+        latex += "\\setarticleauthor{%s}\n" % author
         if author:
-            latex = "\\chapterauthor{%s}\n" % author
+            latex += "\\makearticleauthor\n"
     return latex
 
 

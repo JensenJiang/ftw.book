@@ -21,12 +21,18 @@
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{1}
 
-\newcommand{\chapterauthor}[1]{%
+% Article Author Setting
+\newcommand{\articleauthor}{}
+\newcommand{\makearticleauthor}{%
   {\parindent0pt\vspace*{-25pt}%
-  \linespread{1.1}\large\scshape#1%
+  \linespread{1.1}\large\scshape\articleauthor%
   \par\nobreak\vspace*{35pt}}
   \@afterheading%
 }
+\newcommand{\setarticleauthor}[1]{
+    \renewcommand{\articleauthor}{#1}
+}
+
 \newcommand{\py@release}{}
 \newcommand{\version}{}
 \newcommand{\py@authoraddress}{}
