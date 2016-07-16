@@ -55,6 +55,9 @@ class ILaTeXCodeInjectionEnabled(Interface):
     book-objects (chapters, text blocks).
     """
 
+class ILayoutSettingsExtenderEnabled(Interface):
+    """Enables Layout Settings on Book
+    """
 
 class ILaTeXInjectionController(Interface):
     """This adapter controlls LaTeX injection and providing methods for

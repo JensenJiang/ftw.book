@@ -86,6 +86,16 @@
         <implements interface="ftw.book.interfaces.ILaTeXCodeInjectionEnabled" />
     </class>
 
+    <adapter
+        name="ftw.book.layoutsettings"
+        factory=".latex.layoutsettings.LayoutSettingsExtender"
+        provides="archetypes.schemaextender.interfaces.ISchemaExtender"
+    />
+
+    <class class="ftw.book.content.book.Book">
+        <implements interface="ftw.book.interfaces.ILayoutSettingsExtenderEnabled" />
+    </class>
+
     <configure zcml:condition="installed ftw.zipexport">
         <adapter factory=".zipexport.BookZipRepresentation" />
     </configure>

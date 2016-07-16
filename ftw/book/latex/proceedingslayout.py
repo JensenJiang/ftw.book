@@ -195,6 +195,8 @@ class ProceedingsLayout(MakoLayoutBase):
             'use_lot': book.getUse_lot(),
             'use_loi': book.getUse_loi(),
             'use_index': book.getUse_index(),
+            'paper_size': book.Schema().getField('paper_size').get(book),
+            'font_size': book.Schema().getField('font_size').get(book),
             'release': convert(book.Schema().getField('release').get(book)),
             'editor': convert(book.Schema().getField('author').get(book)),  #Editor
             'authoraddress': address,
@@ -207,7 +209,8 @@ class ProceedingsLayout(MakoLayoutBase):
         self.use_package('hyperref',options = 'hidelinks')      #disable redbox around footnotes
         self.use_package('fancyhdr')
         self.use_package('babel')
-
+        self.use_package('geometry', options = 'top=3cm,bottom=3cm,inner=2cm,outer=3cm')
+        self.use_package('microtype')
         self.add_raw_template_file('simplebook.cls')
         self.remove_package('graphicx')
 
