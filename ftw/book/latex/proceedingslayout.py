@@ -206,10 +206,13 @@ class ProceedingsLayout(MakoLayoutBase):
         return args
 
     def before_render_hook(self):
+        book = self.get_book()
+        _margin = book.Schema().getField('Margin').getRow(book, 0)
+
         self.use_package('hyperref',options = 'hidelinks')      #disable redbox around footnotes
         self.use_package('fancyhdr')
         self.use_package('babel')
-        self.use_package('geometry', options = 'top=3cm,bottom=3cm,inner=2cm,outer=3cm')
+        self.use_package('geometry', options = 'top=' + _margin['top'] + ',bottom=' + _margin['bottom'] + ',inner=' + _margin['inner'] + ',outer=' + _margin['outer'])
         self.use_package('microtype')
         self.add_raw_template_file('simplebook.cls')
         self.remove_package('graphicx')

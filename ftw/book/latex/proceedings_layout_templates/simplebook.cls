@@ -72,20 +72,33 @@
         \vskip 60\p@
         \begin{center}%
             {\Huge \@title \par}%
-            {\em\LARGE \py@release \par}
-            \vskip 3em%
+            %{\em\LARGE \py@release \par}
+            \vskip 4em%
             {\large
                 \lineskip .75em%
                 \begin{tabular}[t]{c}%
                     \@author
                 \end{tabular}\par}%
-
-            {\large
-            \@date \par
-            \py@authoraddress \par
-            }%
-            \booklogo%
+            %{\large
+            %\@date \par
+            %\py@authoraddress \par
+            %}%
+            %\booklogo%
         \end{center}%
+        \newpage
+        \null\vfil
+        \vskip 60\p@
+        \begin{center}%
+          {\em\LARGE \py@release \par}
+          \vskip 2em%
+          {\large
+          \@date \par
+          \vskip 2em%
+          \py@authoraddress \par
+          }%
+          \vskip 2em%
+          \booklogo%
+        \end{center}
         \@thanks
     \end{titlepage}%
 }
