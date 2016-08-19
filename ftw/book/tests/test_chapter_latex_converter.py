@@ -19,11 +19,11 @@ class TestChapterLaTeXView(MockTestCase):
         book = self.providing_stub([IBook])
 
         chapter = self.providing_mock([IChapter])
-        self.expect(aq_parent(aq_inner(chapter))).result(book)
+        self.expect(aq_parent(aq_inner(chapter))).result(book).count(2)
         self.expect(chapter.pretty_title_or_id()).result('chapter title')
         self.expect(chapter.listFolderContents()).result([])
         schema = self.stub()
-        self.expect(chapter.Schema()).result(schema)
+        self.expect(chapter.Schema()).result(schema).count(2)
         self.expect(schema.getField(ANY)).result(None)
 
         layout = self.providing_mock([ILaTeXLayout])
